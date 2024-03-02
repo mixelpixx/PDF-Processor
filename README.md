@@ -19,3 +19,7 @@ Drag an drop a PDF, click submit, and wait for it to process
 The processed file will be returned in a ZIP to a folder called Processed
 
 Save your credentials to your OS Environmental Variables
+
+## Setting Environment Variables
+You need to set the following environment variables:
+You can set these in your shell by adding the following lines to your `.bashrc` or `.bash_profile` file:

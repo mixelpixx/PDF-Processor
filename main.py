@@ -54,8 +54,14 @@ def process_pdf(file):
         result.save_as(os.path.join(processed_folder, "ExtractTextTableWithFigureTableRendition.zip"))
         return "Processing complete. The result is saved in the 'Processed' folder."
 
-    except (ServiceApiException, ServiceUsageException, SdkException) as e:
-        logging.exception(f"Exception encountered while executing operation: {e}")
+    except ServiceApiException as e:
+        logging.exception(f"Service API Exception encountered while executing operation: {e}")
+        return f"An error occurred while processing the PDF: {e}"
+    except ServiceUsageException as e:
+        logging.exception(f"Service Usage Exception encountered while executing operation: {e}")
+        return f"An error occurred while processing the PDF: {e}"
+    except SdkException as e:
+        logging.exception(f"SDK Exception encountered while executing operation: {e}")
         return f"An error occurred while processing the PDF: {e}"
     except Exception as e:
         logging.exception(f"An unexpected error occurred: {e}")
@@ -67,12 +73,13 @@ iface = gr.Interface(
     inputs=["file"],  # input type(s)
     outputs="text",  # output type
     live=False,  # disable live updates to change button label
-    description="PDF Processor"  # change button label
+    description="PDF Processor",  # change button label
+    allow_flagging=False,  # disable flagging
+    theme="huggingface",  # set a theme
+    title="PDF Processor",  # set a title
+    analytics_enabled=False  # disable analytics
 )
 
 # Log the start of the Gradio interface
 logging.info("Starting Gradio Interface...")
 iface.launch()
-
-
-
